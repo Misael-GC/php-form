@@ -1,3 +1,29 @@
+<?php
+
+function validate($name, $email, $subject, $message, $form){
+    return !empty($name)  && !empty($email) && !empty($subject) && !empty($message);
+}
+
+$status ='';
+
+if(isset($_POST['form'])){
+    if( validate(...$_POST)){
+
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $subject = $_POST['subject'];
+        $message = $_POST['message'];
+
+        // Mandar el correo
+
+        $status = 'succes';
+    }else{
+        $status= "danger";
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,15 +35,21 @@
 </head>
 <body>
 
-    <div class="alert danger">
-        <span>Surgió un problema</span>
-    </div>
+    <?php if($status == 'danger'): ?>
+        <div class="alert danger">
+            <span>Surgió un problema</span>
+        </div>
+    <?php endif; ?>
+    
+    <?php if($status == 'succes'): ?>
+        <div class="alert success">
+            <span>¡Mensaje enviado con éxito!</span>
+        </div>
+    <?php endif; ?>
 
-    <div class="alert success">
-        <span>¡Mensaje enviado con éxito!</span>
-    </div>
 
-    <form action="#">
+<!-- 00000000000000000000 -->
+    <form action="./" method="POST">
 
         <h1>¡Contáctanos!</h1>
 
@@ -42,7 +74,8 @@
         </div>
 
         <div class="button-container">
-            <button type="submit">Enviar</button>
+            <!-- 00000000000000000000000000000000 -->
+            <button name="form" type="submit">Enviar</button> 
         </div>
 
         <div class="contact-info">

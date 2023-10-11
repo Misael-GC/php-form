@@ -1,5 +1,7 @@
 <?php
 
+require("mail.php");
+
 function validate($name, $email, $subject, $message, $form){
     return !empty($name)  && !empty($email) && !empty($subject) && !empty($message);
 }
@@ -8,13 +10,15 @@ $status ='';
 
 if(isset($_POST['form'])){
     if( validate(...$_POST)){
-        //evitar código malisioso
+       
         $name = strip_tags($_POST["name"]);
         $email = strip_tags($_POST["email"]);
         $subject = strip_tags($_POST["subject"]);
         $message = strip_tags($_POST["message"]);
 
+        $body = "$name <$email> te envia el siguiente mensaje:: <br><br> $message";
         // Mandar el correo
+        sendMail($subject, $body, $email, $name, true);
 
         $status = 'succes';
     }else{
@@ -48,7 +52,7 @@ if(isset($_POST['form'])){
     <?php endif; ?>
 
 
-<!-- 00000000000000000000 -->
+<!--  -->
     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST">
 
         <h1>¡Contáctanos!</h1>
